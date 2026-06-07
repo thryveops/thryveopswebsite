@@ -723,10 +723,44 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
 .sv-bar:nth-child(4){width:80%}
 .sv-bar:nth-child(5){width:75%}
 
+/* DESIGN PREVIEWS */
+.prev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.prev-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),border-color .25s var(--ease-out);display:flex;flex-direction:column;cursor:pointer}
+.prev-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px oklch(0% 0 0 / 0.35);border-color:var(--border-h)}
+.prev-browser{display:flex;align-items:center;gap:10px;padding:10px 14px;background:oklch(100% 0 0 / 0.04);border-bottom:1px solid var(--border);flex-shrink:0}
+.prev-dots{display:flex;gap:5px;flex-shrink:0}
+.prev-dots span{width:8px;height:8px;border-radius:50%;display:block}
+.prev-dots span:nth-child(1){background:#ff5f57}
+.prev-dots span:nth-child(2){background:#febc2e}
+.prev-dots span:nth-child(3){background:#28c840}
+.prev-url{flex:1;font-size:11px;color:var(--silver-d);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Inter',monospace;letter-spacing:0}
+.prev-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.prev-thumb-label{font-size:clamp(18px,2.5vw,28px);font-weight:900;color:rgba(255,255,255,.13);letter-spacing:-0.04em;text-align:center;padding:16px;line-height:1.1;pointer-events:none;user-select:none}
+.prev-iframe-wrap{position:absolute;inset:0;overflow:hidden}
+.prev-iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:none;pointer-events:none;transform-origin:top left;display:block}
+.prev-info{padding:18px 20px 16px;flex:1}
+.prev-tags{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.prev-tag{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--silver-d)}
+.prev-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:5px;letter-spacing:-.02em}
+.prev-desc{font-size:13px;color:var(--silver-d);line-height:1.5}
+.prev-cta{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-top:1px solid var(--border);font-size:13px;font-weight:600;color:var(--silver);text-decoration:none;transition:color .2s,background .2s;flex-shrink:0}
+.prev-card:hover .prev-cta{color:var(--white);background:oklch(100% 0 0 / 0.04)}
+/* per-card gradient backgrounds */
+.pb-cafe{background:linear-gradient(135deg,#1a0d08 0%,#3a2010 55%,#4d3510 100%)}
+.pb-mental{background:linear-gradient(135deg,#0a0a0a 0%,#1f0505 55%,#330808 100%)}
+.pb-bello{background:linear-gradient(135deg,#0d0810 0%,#1e0d2d 55%,#2a1040 100%)}
+.pb-crown{background:linear-gradient(135deg,#080e1a 0%,#0f1e38 55%,#152848 100%)}
+.pb-nautical{background:linear-gradient(135deg,#060d14 0%,#0a1a28 55%,#0d2035 100%)}
+.pb-peters{background:linear-gradient(135deg,#060d12 0%,#0c1825 55%,#101e30 100%)}
+.pb-blb{background:linear-gradient(135deg,#0d0808 0%,#1a1010 55%,#251818 100%)}
+.pb-tropik{background:linear-gradient(135deg,#060e0f 0%,#0a1c1d 55%,#0c2225 100%)}
+.pb-laterrazza{background:linear-gradient(135deg,#100508 0%,#1e0a10 55%,#2a1218 100%)}
+
 /* RESPONSIVE */
 @media(max-width:1024px){
   .svc-grid{grid-template-columns:1fr 1fr}
   .testi-grid{grid-template-columns:1fr 1fr}
+  .prev-grid{grid-template-columns:repeat(2,1fr)}
   .team-grid{grid-template-columns:1fr 1fr}
   .metrics-grid{grid-template-columns:repeat(4,1fr)}
   .footer-top{grid-template-columns:1fr 1fr 1fr;gap:36px}
@@ -737,7 +771,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   .nav-links,.nav-cta,.header-social-link{display:none}
   .hamburger{display:flex}
   .hero-h{font-size:48px}
-  .svc-grid,.testi-grid,.port-grid,.team-grid{grid-template-columns:1fr}
+  .svc-grid,.testi-grid,.port-grid,.team-grid,.prev-grid{grid-template-columns:1fr}
   .metrics-grid{grid-template-columns:1fr 1fr}
   .metric{padding:40px 20px}
   .metric:nth-child(2){border-right:none}
@@ -1331,6 +1365,197 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
       </div>
     </div>
   </section>
+  <!-- ── DESIGN PREVIEWS ──────────────────────────────────────────────── -->
+  <section class="section" style="background:var(--surface);border-top:1px solid var(--border)" aria-labelledby="prev-section-title">
+    <div class="container">
+      <div class="sh fade-up">
+        <span class="label">Concept Builds</span>
+        <h2 class="sh-title" id="prev-section-title">Website Previews</h2>
+        <p class="sh-sub">Full website mockups built for local businesses — a look at what's possible before the first contract is signed.</p>
+      </div>
+      <div class="prev-grid">
+
+        <!-- Little Tina Café -->
+        <a class="prev-card fade-up" href="https://previews.thryveops.com/little-tina-cafe" target="_blank" rel="noopener" aria-label="View Little Tina Café preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/little-tina-cafe</div>
+          </div>
+          <div class="prev-thumb pb-cafe">
+            <div class="prev-thumb-label">Little Tina Café</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://little-tina-cafe.vercel.app" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Restaurant</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
+            <div class="prev-title">Little Tina Café</div>
+            <div class="prev-desc">Specialty coffee, craft cocktails &amp; Tulum-inspired bites. Downtown Tampa.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- Mental Game -->
+        <a class="prev-card fade-up fd2" href="https://previews.thryveops.com/mentalgame" target="_blank" rel="noopener" aria-label="View Mental Game preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/mentalgame</div>
+          </div>
+          <div class="prev-thumb pb-mental">
+            <div class="prev-thumb-label">Mental Game</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://previews.thryveops.com/mentalgame" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Music</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Wellness</span></div>
+            <div class="prev-title">Mental Game — Evan J</div>
+            <div class="prev-desc">Music meets mental health. A brand built around artistic identity &amp; purpose.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- Bello Bar + Kitchen -->
+        <a class="prev-card fade-up fd3" href="https://previews.thryveops.com/bello-bar-kitchen" target="_blank" rel="noopener" aria-label="View Bello Bar + Kitchen preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/bello-bar-kitchen</div>
+          </div>
+          <div class="prev-thumb pb-bello">
+            <div class="prev-thumb-label">Bello Bar + Kitchen</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://previews.thryveops.com/bello-bar-kitchen" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Restaurant &amp; Bar</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
+            <div class="prev-title">Bello Bar + Kitchen</div>
+            <div class="prev-desc">New York lounge energy. Caribbean &amp; Latin soul. Late-night cocktails &amp; DJ brunch.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- Crown Clean Auto Detailing -->
+        <a class="prev-card fade-up" href="https://previews.thryveops.com/crown-clean-auto-detailing" target="_blank" rel="noopener" aria-label="View Crown Clean Auto Detailing preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/crown-clean-auto-detailing</div>
+          </div>
+          <div class="prev-thumb pb-crown">
+            <div class="prev-thumb-label">Crown Clean</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://previews.thryveops.com/crown-clean-auto-detailing" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Auto Detailing</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
+            <div class="prev-title">Crown Clean Auto Detailing</div>
+            <div class="prev-desc">Tampa Bay's elite mobile auto detailing — premium results, at your door.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- Nautical Marine -->
+        <a class="prev-card fade-up fd2" href="https://previews.thryveops.com/nautical-marine" target="_blank" rel="noopener" aria-label="View Nautical Marine preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/nautical-marine</div>
+          </div>
+          <div class="prev-thumb pb-nautical">
+            <div class="prev-thumb-label">Nautical Marine</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://previews.thryveops.com/nautical-marine" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Marine Services</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa Bay</span></div>
+            <div class="prev-title">Nautical Marine</div>
+            <div class="prev-desc">Tampa Bay's #1 outboard repower &amp; service center. 30+ years of marine expertise.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- Peter's Boat Repairs -->
+        <a class="prev-card fade-up fd3" href="https://previews.thryveops.com/peters-boat-repairs" target="_blank" rel="noopener" aria-label="View Peter's Marine preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/peters-boat-repairs</div>
+          </div>
+          <div class="prev-thumb pb-peters">
+            <div class="prev-thumb-label">Peter's Marine</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://previews.thryveops.com/peters-boat-repairs" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Marine Repair</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa Bay</span></div>
+            <div class="prev-title">Peter's Inboard &amp; Outboard</div>
+            <div class="prev-desc">Tampa Bay's trusted marine mechanic — inboard &amp; outboard engine repair.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- Tropik Detailing Tampa -->
+        <a class="prev-card fade-up" href="https://previews.thryveops.com/tropik-detailing-tampa" target="_blank" rel="noopener" aria-label="View Tropik Detailing Tampa preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/tropik-detailing-tampa</div>
+          </div>
+          <div class="prev-thumb pb-tropik">
+            <div class="prev-thumb-label">Tropik Detailing</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://previews.thryveops.com/tropik-detailing-tampa" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Auto &amp; Marine Detailing</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
+            <div class="prev-title">Tropik Detailing Tampa</div>
+            <div class="prev-desc">Premium mobile auto &amp; marine detailing. SoHo / Hyde Park, Tampa.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- La Terrazza -->
+        <a class="prev-card fade-up fd2" href="https://previews.thryveops.com/laterrazza" target="_blank" rel="noopener" aria-label="View La Terrazza preview">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">previews.thryveops.com/laterrazza</div>
+          </div>
+          <div class="prev-thumb pb-laterrazza">
+            <div class="prev-thumb-label">La Terrazza</div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://previews.thryveops.com/laterrazza" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Fine Dining</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Ybor City, FL</span></div>
+            <div class="prev-title">La Terrazza Ristorante</div>
+            <div class="prev-desc">Northern Italian fine dining. House-made pasta &amp; fresh seafood in Ybor City.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+        <!-- Big League Barbershop — update href once live URL is confirmed -->
+        <a class="prev-card fade-up fd3" href="#" target="_blank" rel="noopener" aria-label="View Big League Barbershop preview" id="blb-preview-card">
+          <div class="prev-browser">
+            <div class="prev-dots"><span></span><span></span><span></span></div>
+            <div class="prev-url">blb-website — url pending</div>
+          </div>
+          <div class="prev-thumb pb-blb">
+            <div class="prev-thumb-label">Big League Barbershop</div>
+          </div>
+          <div class="prev-info">
+            <div class="prev-tags"><span class="prev-tag">Barbershop</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
+            <div class="prev-title">Big League Barbershop</div>
+            <div class="prev-desc">Precision cuts, fades &amp; beard grooming in Downtown Tampa. Online booking.</div>
+          </div>
+          <div class="prev-cta">View Preview <span>&#8594;</span></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
   <section class="section cta-sect" aria-label="Work CTA">
     <div class="container" style="position:relative;z-index:1">
       <div class="fade-up">
@@ -1750,6 +1975,7 @@ function go(page) {
   window.location.hash = page === 'home' ? '' : page;
   window.scrollTo({ top: 0, behavior: 'instant' });
   setTimeout(setupObservers, 50);
+  if (page === 'work') setTimeout(scalePrevIframes, 80);
   if (page === 'home') { startCanvas(); updateTitle(page); }
   else { stopCanvas(); updateTitle(page); }
 }
@@ -1949,6 +2175,17 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     btn.disabled = false;
   });
 });
+
+// ===== PREVIEW IFRAME SCALING =====
+function scalePrevIframes() {
+  document.querySelectorAll('.prev-iframe-wrap').forEach(function(wrap) {
+    var iframe = wrap.querySelector('.prev-iframe');
+    if (!iframe) return;
+    var scale = wrap.offsetWidth / 1280;
+    iframe.style.transform = 'scale(' + scale + ')';
+  });
+}
+window.addEventListener('resize', scalePrevIframes, { passive: true });
 
 // ===== INIT =====
 setupObservers();
