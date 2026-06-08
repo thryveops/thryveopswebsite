@@ -143,6 +143,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  gap: 32px;
 }
 .nav-logo {
   display: flex;
@@ -150,6 +151,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   gap: 12px;
   cursor: pointer;
   transition: var(--t);
+  flex: 1;
 }
 .nav-logo:active {
   transform: scale(0.98);
@@ -161,13 +163,19 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   color: var(--white);
   letter-spacing: -0.03em;
 }
+.nav-end {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
 .header-social-link {
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--silver-d);
   transition: var(--t);
-  margin-left: 16px;
   padding: 4px;
 }
 .header-social-link:hover {
@@ -177,9 +185,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-left: auto;
-  margin-right: 24px;
+  gap: 6px;
 }
 .nav-link {
   padding: 8px 16px;
@@ -827,13 +833,15 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
         <button class="nav-link" data-page="about" onclick="go('about')" role="listitem">About</button>
         <button class="nav-link" data-page="pricing" onclick="go('pricing')" role="listitem">Pricing</button>
       </div>
-      <button class="nav-cta" onclick="go('contact')" aria-label="Get a free audit">Get a Free Audit</button>
-      <a href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener" class="header-social-link" aria-label="Follow us on Instagram">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-      </a>
-      <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="drawer">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="nav-end">
+        <button class="nav-cta" onclick="go('contact')" aria-label="Get a free audit">Get a Free Audit</button>
+        <a href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener" class="header-social-link" aria-label="Follow us on Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="drawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </div>
 </nav>
@@ -1152,12 +1160,16 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
         </div>
         <div class="fade-up fd2">
           <div class="svc-visual sv-web">
-            <div class="sv-decor">
-              <div class="sv-bar"></div>
-              <div class="sv-bar"></div>
-              <div class="sv-bar"></div>
-              <div class="sv-bar"></div>
-              <div class="sv-bar"></div>
+            <div class="prev-iframe-wrap">
+              <iframe class="prev-iframe" src="https://little-tina-cafe.vercel.app" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" style="height:960px"></iframe>
+            </div>
+            <div style="position:absolute;top:0;left:0;right:0;background:rgba(18,18,32,.9);backdrop-filter:blur(6px);padding:8px 12px;display:flex;align-items:center;gap:8px;z-index:2;border-bottom:1px solid rgba(255,255,255,.08)">
+              <div style="display:flex;gap:5px;flex-shrink:0">
+                <span style="width:9px;height:9px;border-radius:50%;background:#ff5f57;display:block"></span>
+                <span style="width:9px;height:9px;border-radius:50%;background:#febc2e;display:block"></span>
+                <span style="width:9px;height:9px;border-radius:50%;background:#28c840;display:block"></span>
+              </div>
+              <div style="flex:1;background:rgba(255,255,255,.07);border-radius:4px;padding:3px 10px;font-size:10px;color:rgba(255,255,255,.35);font-family:monospace;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">little-tina-cafe.vercel.app</div>
             </div>
           </div>
           <div style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg)">
@@ -1207,24 +1219,33 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
         </div>
         <div class="fade-up fd2">
           <div class="svc-visual sv-ads">
-            <div class="sv-decor" style="gap:14px">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%">
-                <div style="background:rgba(192,192,192,.12);border-radius:8px;padding:14px;text-align:center">
-                  <div style="font-size:20px;font-weight:800;color:#C0C0C0">4.2x</div>
-                  <div style="font-size:10px;color:#888;margin-top:4px">ROAS</div>
+            <div style="width:82%;background:#1a1a1a;border-radius:12px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.6);position:relative;z-index:1">
+              <div style="padding:10px 12px;display:flex;align-items:center;gap:9px">
+                <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#c8a055,#7a5020);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0">T</div>
+                <div style="flex:1">
+                  <div style="font-size:11px;font-weight:700;color:#e8e8e8">ThryveOps</div>
+                  <div style="font-size:9px;color:#888">Sponsored &nbsp;&#183;&nbsp; &#9679; Meta</div>
                 </div>
-                <div style="background:rgba(192,192,192,.12);border-radius:8px;padding:14px;text-align:center">
-                  <div style="font-size:20px;font-weight:800;color:#C0C0C0">&#8595;48%</div>
-                  <div style="font-size:10px;color:#888;margin-top:4px">Cost/Lead</div>
+                <div style="color:#666;font-size:14px;letter-spacing:1px">&#183;&#183;&#183;</div>
+              </div>
+              <div style="padding:0 12px 8px"><p style="font-size:10px;color:#ccc;margin:0;line-height:1.5">Is your ad budget actually working? We build <strong style="color:#fff">data-driven Meta &amp; Google campaigns</strong> that turn clicks into paying customers.</p></div>
+              <div style="height:108px;background:linear-gradient(135deg,#3d2800,#7a5000,#c8a040);display:flex;align-items:center;justify-content:center">
+                <div style="text-align:center;padding:0 16px">
+                  <div style="font-size:26px;font-weight:900;color:#fff;line-height:1">3&#8211;5x</div>
+                  <div style="font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:2px;margin-top:3px">Avg. Return on Ad Spend</div>
                 </div>
-                <div style="background:rgba(192,192,192,.12);border-radius:8px;padding:14px;text-align:center">
-                  <div style="font-size:20px;font-weight:800;color:#C0C0C0">&#8593;340%</div>
-                  <div style="font-size:10px;color:#888;margin-top:4px">Leads</div>
+              </div>
+              <div style="padding:8px 12px;background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.05)">
+                <div>
+                  <div style="font-size:8px;color:#555;text-transform:uppercase;letter-spacing:.5px">thryveops.com</div>
+                  <div style="font-size:10px;font-weight:700;color:#ddd">Scale Your Ad Revenue Today</div>
                 </div>
-                <div style="background:rgba(192,192,192,.12);border-radius:8px;padding:14px;text-align:center">
-                  <div style="font-size:20px;font-weight:800;color:#C0C0C0">94%</div>
-                  <div style="font-size:10px;color:#888;margin-top:4px">Retention</div>
-                </div>
+                <div style="background:#1877f2;color:#fff;font-size:9px;font-weight:700;padding:6px 10px;border-radius:6px;white-space:nowrap;flex-shrink:0;margin-left:8px">Learn More</div>
+              </div>
+              <div style="padding:7px 12px;border-top:1px solid rgba(255,255,255,.05);display:flex;gap:14px">
+                <div style="font-size:9px;color:#666">&#128077; Like</div>
+                <div style="font-size:9px;color:#666">&#128172; Comment</div>
+                <div style="font-size:9px;color:#666">&#10148; Share</div>
               </div>
             </div>
           </div>
@@ -1274,22 +1295,8 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
           <button class="btn btn-primary" onclick="go('contact')" aria-label="Get started with social media management">Get Started &#8594;</button>
         </div>
         <div class="fade-up fd2">
-          <div class="svc-visual sv-soc">
-            <div class="sv-decor" style="gap:12px">
-              <div style="display:flex;gap:8px;width:100%;align-items:center">
-                <div style="width:36px;height:36px;border-radius:50%;background:rgba(192,192,192,.15);flex-shrink:0"></div>
-                <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-                  <div style="height:6px;border-radius:3px;background:rgba(192,192,192,.2);width:60%"></div>
-                  <div style="height:6px;border-radius:3px;background:rgba(192,192,192,.1);width:80%"></div>
-                </div>
-              </div>
-              <div style="width:100%;background:rgba(192,192,192,.06);border-radius:8px;height:80px;border:1px solid rgba(192,192,192,.1)"></div>
-              <div style="display:flex;gap:16px;width:100%">
-                <div style="font-size:11px;color:#888">&#10084; 284 likes</div>
-                <div style="font-size:11px;color:#888">&#128172; 47 comments</div>
-                <div style="font-size:11px;color:#888">&#8594; 92 shares</div>
-              </div>
-            </div>
+          <div class="svc-visual sv-soc" style="padding:0">
+            <img src="images/ig_profile_screenshot.png" alt="ThryveOps Instagram Profile" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
           </div>
           <div style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg)">
             <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Expected Results</p>
@@ -1809,7 +1816,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
           </div>
           <div class="ci-block">
             <div class="ci-lbl">Email</div>
-            <div class="ci-val">thryveops@gmail.com</div>
+            <div class="ci-val">contact@thryveops.com</div>
             <div class="ci-sub">We respond within 24 hours</div>
           </div>
           <div class="ci-block">
@@ -1950,7 +1957,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
       <div>
         <div class="fcol-title">Contact</div>
         <div class="flinks">
-          <span class="flink">thryveops@gmail.com</span>
+          <span class="flink">contact@thryveops.com</span>
           <span class="flink">MD | FL</span>
           <span class="flink">Mon–Fri 9am–6pm EST</span>
         </div>
@@ -1978,7 +1985,7 @@ function go(page) {
   window.location.hash = page === 'home' ? '' : page;
   window.scrollTo({ top: 0, behavior: 'instant' });
   setTimeout(setupObservers, 50);
-  if (page === 'work') setTimeout(scalePrevIframes, 80);
+  if (page === 'work' || page === 'services') setTimeout(scalePrevIframes, 80);
   if (page === 'home') { startCanvas(); updateTitle(page); }
   else { stopCanvas(); updateTitle(page); }
 }
@@ -2184,7 +2191,9 @@ function scalePrevIframes() {
   document.querySelectorAll('.prev-iframe-wrap').forEach(function(wrap) {
     var iframe = wrap.querySelector('.prev-iframe');
     if (!iframe) return;
-    var scale = wrap.offsetWidth / 1280;
+    var baseWidth = parseFloat(wrap.dataset.baseWidth) || 1280;
+    var scale = wrap.offsetWidth / baseWidth;
+    iframe.style.width = baseWidth + 'px';
     iframe.style.transform = 'scale(' + scale + ')';
   });
 }
