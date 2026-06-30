@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ThryveOps — Digital Brand Scaling Agency | Columbia, MD</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#14161b">
 <meta name="description" content="ThryveOps is a digital brand scaling agency in Columbia, Maryland. High-converting websites, performance ad campaigns, and social media management. Guaranteed results.">
 <meta property="og:title" content="ThryveOps — Digital Brand Scaling Agency">
 <meta property="og:description" content="We build high-converting digital ecosystems for businesses ready to grow. Guaranteed results or your money back.">
@@ -253,7 +259,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding-top: var(--nav-h);
+  padding: calc(var(--nav-h) + 48px) 0 96px;
   background: radial-gradient(circle at 50% 30%, oklch(25% 0.02 260 / 0.15), transparent 70%);
 }
 #hero-canvas {
@@ -324,12 +330,14 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 64px;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 .hero-badges {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .hero-badge {
   display: inline-flex;
@@ -358,9 +366,9 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
 
 /* PROOF */
 .proof{padding:44px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
-.proof-inner{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.proof-inner{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
 .proof-label{font-size:13px;color:var(--silver-d);white-space:nowrap}
-.proof-pills{display:flex;gap:8px;flex-wrap:wrap}
+.proof-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .proof-pill{padding:5px 14px;border:1px solid var(--border);border-radius:100px;font-size:12px;color:var(--silver-d);transition:border-color .2s}
 .proof-pill:hover{border-color:var(--border-h);color:var(--silver)}
 .proof-rating{display:flex;align-items:center;gap:10px;white-space:nowrap}
@@ -697,6 +705,35 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   font-weight: 700;
   line-height: 1.4;
 }
+.ig-followers {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-top: 26px;
+  padding: 11px 24px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: oklch(0% 0 0 / 0.3);
+  transition: var(--t);
+}
+.ig-followers:hover {
+  border-color: var(--border-h);
+  transform: translateY(-2px);
+}
+.ig-followers-count {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.ig-followers-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--silver-d);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 .ig-cta-wrap {
   text-align: center;
   margin-top: 48px;
@@ -795,13 +832,13 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
   .footer-bot{flex-direction:column;text-align:center}
   .proof-inner{flex-direction:column;gap:18px;text-align:center}
   .proof-pills{justify-content:center}
-  .hero-ctas{flex-direction:column;align-items:flex-start}
+  .hero-ctas{flex-direction:column;align-items:center}
   .contact-form-wrap{padding:28px 20px}
   .origin-box{padding:36px 24px}
 }
 @media(max-width:480px){
   .hero-h{font-size:36px;letter-spacing:-.03em}
-  .hero-badges{flex-direction:column;align-items:flex-start}
+  .hero-badges{flex-direction:column;align-items:center}
   .footer-top{grid-template-columns:1fr}
   .footer-legal{flex-direction:column;gap:10px;align-items:center}
   .filter-bar{gap:6px}
@@ -1062,6 +1099,8 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
         <p class="cta-trust">No contracts. No fluff. Just results.</p>
       </div>
     </div>
+  </section>
+
   <!-- INSTAGRAM HIGHLIGHTS -->
   <section class="ig-section" aria-labelledby="ig-title">
     <div class="container">
@@ -1069,40 +1108,44 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
         <span class="label">Social Proof</span>
         <h2 class="sh-title" id="ig-title">Follow the Growth</h2>
         <p class="sh-sub">Get a behind-the-scenes look at how we scale brands in real-time. Follow us for daily insights and results.</p>
+        <!-- IG_FOLLOWERS_START -->
+        <a class="ig-followers" href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener">
+          <span class="ig-followers-count">10.3K</span>
+          <span class="ig-followers-label">followers and growing</span>
+        </a>
+        <!-- IG_FOLLOWERS_END -->
       </div>
       <div class="ig-grid">
-        <!-- POST 1: MISSION -->
-        <div class="ig-card fade-up" onclick="window.open('https://www.instagram.com/thryveops/', '_blank')">
-          <img src="images/ig_mission.jpg" alt="Why We Built ThryveOps" class="ig-img">
+        <!-- IG_FEED_START -->
+        <a class="ig-card fade-up" href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener" aria-label="View on Instagram">
+          <img src="images/ig_mission.jpg" alt="ThryveOps on Instagram" class="ig-img" loading="lazy">
           <div class="ig-overlay">
-            <span class="ig-tag">Our Mission</span>
-            <div class="ig-post-title">Why We Built ThryveOps</div>
+            <span class="ig-tag">Instagram</span>
+            <div class="ig-post-title">Follow @thryveops</div>
           </div>
-        </div>
-        <!-- POST 2: BENEFITS -->
-        <div class="ig-card fade-up fd2" onclick="window.open('https://www.instagram.com/thryveops/', '_blank')">
-          <img src="images/ig_benefits.jpg" alt="What You Get Working With ThryveOps" class="ig-img">
+        </a>
+        <a class="ig-card fade-up fd2" href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener" aria-label="View on Instagram">
+          <img src="images/ig_benefits.jpg" alt="ThryveOps on Instagram" class="ig-img" loading="lazy">
           <div class="ig-overlay">
-            <span class="ig-tag">Our Edge</span>
-            <div class="ig-post-title">What You Get Working With Us</div>
+            <span class="ig-tag">Instagram</span>
+            <div class="ig-post-title">Follow @thryveops</div>
           </div>
-        </div>
-        <!-- POST 3: WEB DEV -->
-        <div class="ig-card fade-up fd3" onclick="window.open('https://www.instagram.com/thryveops/', '_blank')">
-          <img src="images/ig_web.jpg" alt="Is Your Website Working?" class="ig-img">
+        </a>
+        <a class="ig-card fade-up fd3" href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener" aria-label="View on Instagram">
+          <img src="images/ig_web.jpg" alt="ThryveOps on Instagram" class="ig-img" loading="lazy">
           <div class="ig-overlay">
-            <span class="ig-tag">Web Dev</span>
-            <div class="ig-post-title">Is Your Website Actually Working?</div>
+            <span class="ig-tag">Instagram</span>
+            <div class="ig-post-title">Follow @thryveops</div>
           </div>
-        </div>
-        <!-- POST 4: META ADS -->
-        <div class="ig-card fade-up fd4" onclick="window.open('https://www.instagram.com/thryveops/', '_blank')">
-          <img src="images/ig_ads.jpg" alt="Meta Ads By The Numbers" class="ig-img">
+        </a>
+        <a class="ig-card fade-up fd4" href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener" aria-label="View on Instagram">
+          <img src="images/ig_ads.jpg" alt="ThryveOps on Instagram" class="ig-img" loading="lazy">
           <div class="ig-overlay">
-            <span class="ig-tag">Meta Ads</span>
-            <div class="ig-post-title">Scaling Brands by the Numbers</div>
+            <span class="ig-tag">Instagram</span>
+            <div class="ig-post-title">Follow @thryveops</div>
           </div>
-        </div>
+        </a>
+        <!-- IG_FEED_END -->
       </div>
       <div class="ig-cta-wrap fade-up">
         <a href="https://www.instagram.com/thryveops/" target="_blank" rel="noopener" class="btn btn-ghost">

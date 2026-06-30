@@ -1,0 +1,70 @@
+name: Update Instagram Feed
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours
+  workflow_dispatch:          # manual "Run workflow" button
+
+# Allow the default token to commit the updated feed back to the repo
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-feed
+  cancel-in-progress: false
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch live Instagram feed
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$IG_ACCESS_TOKEN" ]; then
+            echo "IG_ACCESS_TOKEN not set yet — skipping feed update (no-op)."
+            exit 0
+          fi
+          node scripts/fetch-instagram.mjs
+
+      - name: Commit updated feed
+        run: |
+          git config user.name "thryveops-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add images/ig_live index.html
+          if git diff --staged --quiet; then
+            echo "No feed changes to commit."
+          else
+            git commit -m "chore: update live Instagram feed [skip ci]"
+            git push
+          fi
+
+      # Slides the 60-day token window forward so it never expires.
+      # Requires a GH_PAT secret (fine-grained, Secrets: write). Safe to skip:
+      # if GH_PAT is unset this step no-ops. Instagram only refreshes tokens
+      # that are >24h old, so early runs may report "skipped" — that's fine.
+      - name: Refresh long-lived token
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "GH_PAT not set — skipping token auto-refresh."
+            exit 0
+          fi
+          RESP=$(curl -s "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=$IG_ACCESS_TOKEN")
+          NEW=$(echo "$RESP" | python3 -c "import sys,json; print(json.load(sys.stdin).get('access_token',''))" 2>/dev/null || true)
+          if [ -n "$NEW" ]; then
+            gh secret set IG_ACCESS_TOKEN --body "$NEW" --repo "$GITHUB_REPOSITORY"
+            echo "Token refreshed and stored."
+          else
+            echo "Token not refreshed (likely <24h old or transient) — non-fatal. Response: $RESP"
+          fi
