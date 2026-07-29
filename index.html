@@ -793,6 +793,48 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
 .prev-desc{font-size:13px;color:var(--silver-d);line-height:1.5}
 .prev-cta{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-top:1px solid var(--border);font-size:13px;font-weight:600;color:var(--silver);text-decoration:none;transition:color .2s,background .2s;flex-shrink:0}
 .prev-card:hover .prev-cta{color:var(--white);background:oklch(100% 0 0 / 0.04)}
+
+/* ── CONCEPT BUILDS: industry tabs ─────────────────────────────────
+   Only 3 live iframes exist at once — the active tab's. Reuses the
+   .prev-card chrome above; .cb-frame is kept separate from
+   .prev-iframe so scalePrevIframes() (home page) never touches it. */
+.cb-tabs-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:oklch(14% 0.01 260);margin-bottom:36px}
+.cb-tabs{display:flex;gap:8px;overflow-x:auto;padding:16px 0;scrollbar-width:none;justify-content:center;flex-wrap:wrap}
+.cb-tabs::-webkit-scrollbar{display:none}
+.cb-tab{padding:9px 18px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--silver-d);font-size:13.5px;font-weight:500;cursor:pointer;transition:var(--t);white-space:nowrap;font-family:inherit;display:flex;align-items:center;gap:8px}
+.cb-tab:hover{border-color:var(--border-h);color:var(--white)}
+.cb-tab.active{background:var(--silver);color:var(--bg);border-color:var(--silver);font-weight:600}
+.cb-tab .n{font-size:11px;opacity:.55;font-variant-numeric:tabular-nums}
+.cb-tab.feat{border-color:var(--border-h);color:var(--silver-l)}
+.cb-tab.feat.active{background:var(--white);color:var(--bg)}
+.cb-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:20px;flex-wrap:wrap;min-height:34px}
+.cb-titles{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.cb-title{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.03em;color:var(--white)}
+.cb-count{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--silver-d)}
+.cb-recycle{border:1px solid var(--border);background:var(--surface2);color:var(--silver);border-radius:100px;padding:8px 17px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--t);display:flex;align-items:center;gap:9px;flex-shrink:0}
+.cb-recycle:hover{background:var(--silver);color:var(--bg);border-color:var(--silver)}
+.cb-recycle .pos{font-size:11px;opacity:.6;font-variant-numeric:tabular-nums}
+.cb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cb-row.swapping .prev-card{opacity:0;transform:translateY(10px)}
+.cb-row .prev-card{transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),border-color .25s var(--ease-out),opacity .3s ease;min-width:0}
+.cb-frame-wrap{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .5s ease}
+.cb-frame-wrap.live{opacity:1}
+.cb-frame{position:absolute;top:0;left:0;width:1280px;height:720px;border:none;pointer-events:none;transform-origin:top left;display:block}
+.cb-badge{position:absolute;top:11px;right:11px;z-index:3;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--silver-l);background:oklch(12% 0.01 260 / .8);backdrop-filter:blur(6px);border:1px solid var(--border-h);border-radius:100px;padding:4px 9px}
+.cb-shim{position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,oklch(100% 0 0 / .045) 50%,transparent 65%);background-size:220% 100%;animation:cbShim 1.6s ease-in-out infinite;transition:opacity .4s;pointer-events:none;z-index:1}
+.prev-thumb.loaded .cb-shim{opacity:0}
+@keyframes cbShim{0%{background-position:140% 0}100%{background-position:-40% 0}}
+.cb-seo{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media(max-width:1000px){
+  .cb-row{grid-template-columns:repeat(2,1fr)}
+  .cb-row .prev-card:nth-child(3){display:none}
+}
+@media(max-width:760px){
+  .cb-row{grid-template-columns:1fr}
+  .cb-row .prev-card:nth-child(3){display:flex}
+  .cb-tabs{justify-content:flex-start;flex-wrap:nowrap}
+  .cb-head{align-items:center}
+}
 /* per-card gradient backgrounds */
 .pb-cafe{background:linear-gradient(135deg,#1a0d08 0%,#3a2010 55%,#4d3510 100%)}
 .pb-mental{background:linear-gradient(135deg,#0a0a0a 0%,#1f0505 55%,#330808 100%)}
@@ -1430,197 +1472,32 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
       </div>
     </div>
   </section>
-  <!-- ── DESIGN PREVIEWS ──────────────────────────────────────────────── -->
-  <section class="section" style="background:var(--surface);border-top:1px solid var(--border)" aria-labelledby="prev-section-title">
+  <!-- ── CONCEPT BUILDS ───────────────────────────────────────────────── -->
+  <section class="section" style="background:var(--surface);border-top:1px solid var(--border)" aria-labelledby="cb-section-title">
     <div class="container">
       <div class="sh fade-up">
         <span class="label">Concept Builds</span>
-        <h2 class="sh-title" id="prev-section-title">Website Previews</h2>
-        <p class="sh-sub">Full website mockups built for local businesses — a look at what's possible before the first contract is signed.</p>
+        <h2 class="sh-title" id="cb-section-title">Built for Your Industry</h2>
+        <p class="sh-sub">Full website concepts built for real local businesses — <strong style="color:var(--silver-l);font-weight:600">80+ builds across 11 industries</strong>. Pick your trade and see three of them running live.</p>
       </div>
-      <div class="prev-grid">
+    </div>
 
-        <!-- Little Tina Café -->
-        <a class="prev-card fade-up" href="https://thryveops-previews.vercel.app/little-tina-cafe" target="_blank" rel="noopener" aria-label="View Little Tina Café preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/little-tina-cafe</div>
-          </div>
-          <div class="prev-thumb pb-cafe">
-            <div class="prev-thumb-label">Little Tina Café</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://little-tina-cafe.vercel.app" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Restaurant</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
-            <div class="prev-title">Little Tina Café</div>
-            <div class="prev-desc">Specialty coffee, craft cocktails &amp; Tulum-inspired bites. Downtown Tampa.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- Mental Game -->
-        <a class="prev-card fade-up fd2" href="https://thryveops-previews.vercel.app/mentalgame" target="_blank" rel="noopener" aria-label="View Mental Game preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/mentalgame</div>
-          </div>
-          <div class="prev-thumb pb-mental">
-            <div class="prev-thumb-label">Mental Game</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/mentalgame" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Music</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Wellness</span></div>
-            <div class="prev-title">Mental Game — Evan J</div>
-            <div class="prev-desc">Music meets mental health. A brand built around artistic identity &amp; purpose.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- Bello Bar + Kitchen -->
-        <a class="prev-card fade-up fd3" href="https://thryveops-previews.vercel.app/bello-bar-kitchen" target="_blank" rel="noopener" aria-label="View Bello Bar + Kitchen preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/bello-bar-kitchen</div>
-          </div>
-          <div class="prev-thumb pb-bello">
-            <div class="prev-thumb-label">Bello Bar + Kitchen</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/bello-bar-kitchen" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Restaurant &amp; Bar</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
-            <div class="prev-title">Bello Bar + Kitchen</div>
-            <div class="prev-desc">New York lounge energy. Caribbean &amp; Latin soul. Late-night cocktails &amp; DJ brunch.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- Crown Clean Auto Detailing -->
-        <a class="prev-card fade-up" href="https://thryveops-previews.vercel.app/crown-clean-auto-detailing" target="_blank" rel="noopener" aria-label="View Crown Clean Auto Detailing preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/crown-clean-auto-detailing</div>
-          </div>
-          <div class="prev-thumb pb-crown">
-            <div class="prev-thumb-label">Crown Clean</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/crown-clean-auto-detailing" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Auto Detailing</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
-            <div class="prev-title">Crown Clean Auto Detailing</div>
-            <div class="prev-desc">Tampa Bay's elite mobile auto detailing — premium results, at your door.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- Nautical Marine -->
-        <a class="prev-card fade-up fd2" href="https://thryveops-previews.vercel.app/nautical-marine" target="_blank" rel="noopener" aria-label="View Nautical Marine preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/nautical-marine</div>
-          </div>
-          <div class="prev-thumb pb-nautical">
-            <div class="prev-thumb-label">Nautical Marine</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/nautical-marine" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Marine Services</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa Bay</span></div>
-            <div class="prev-title">Nautical Marine</div>
-            <div class="prev-desc">Tampa Bay's #1 outboard repower &amp; service center. 30+ years of marine expertise.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- Peter's Boat Repairs -->
-        <a class="prev-card fade-up fd3" href="https://thryveops-previews.vercel.app/peters-boat-repairs" target="_blank" rel="noopener" aria-label="View Peter's Marine preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/peters-boat-repairs</div>
-          </div>
-          <div class="prev-thumb pb-peters">
-            <div class="prev-thumb-label">Peter's Marine</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/peters-boat-repairs" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Marine Repair</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa Bay</span></div>
-            <div class="prev-title">Peter's Inboard &amp; Outboard</div>
-            <div class="prev-desc">Tampa Bay's trusted marine mechanic — inboard &amp; outboard engine repair.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- Tropik Detailing Tampa -->
-        <a class="prev-card fade-up" href="https://thryveops-previews.vercel.app/tropik-detailing-tampa" target="_blank" rel="noopener" aria-label="View Tropik Detailing Tampa preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/tropik-detailing-tampa</div>
-          </div>
-          <div class="prev-thumb pb-tropik">
-            <div class="prev-thumb-label">Tropik Detailing</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/tropik-detailing-tampa" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Auto &amp; Marine Detailing</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Tampa, FL</span></div>
-            <div class="prev-title">Tropik Detailing Tampa</div>
-            <div class="prev-desc">Premium mobile auto &amp; marine detailing. SoHo / Hyde Park, Tampa.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- La Terrazza -->
-        <a class="prev-card fade-up fd2" href="https://thryveops-previews.vercel.app/laterrazza" target="_blank" rel="noopener" aria-label="View La Terrazza preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/laterrazza</div>
-          </div>
-          <div class="prev-thumb pb-laterrazza">
-            <div class="prev-thumb-label">La Terrazza</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/laterrazza" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Fine Dining</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Ybor City, FL</span></div>
-            <div class="prev-title">La Terrazza Ristorante</div>
-            <div class="prev-desc">Northern Italian fine dining. House-made pasta &amp; fresh seafood in Ybor City.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
-        <!-- Familiar Faces Barber Shop -->
-        <a class="prev-card fade-up fd3" href="https://thryveops-previews.vercel.app/familiar-faces-barber-shop" target="_blank" rel="noopener" aria-label="View Familiar Faces Barber Shop preview">
-          <div class="prev-browser">
-            <div class="prev-dots"><span></span><span></span><span></span></div>
-            <div class="prev-url">thryveops-previews.vercel.app/familiar-faces-barber-shop</div>
-          </div>
-          <div class="prev-thumb pb-blb">
-            <div class="prev-thumb-label">Familiar Faces</div>
-            <div class="prev-iframe-wrap">
-              <iframe class="prev-iframe" src="https://thryveops-previews.vercel.app/familiar-faces-barber-shop" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-            </div>
-          </div>
-          <div class="prev-info">
-            <div class="prev-tags"><span class="prev-tag">Barbershop</span><span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">Columbia, MD</span></div>
-            <div class="prev-title">Familiar Faces Barber Shop</div>
-            <div class="prev-desc">Columbia's neighborhood shop where every client becomes a regular.</div>
-          </div>
-          <div class="prev-cta">View Preview <span>&#8594;</span></div>
-        </a>
-
+    <div class="cb-tabs-wrap">
+      <div class="container">
+        <div class="cb-tabs" id="cb-tabs" role="tablist" aria-label="Filter concept builds by industry"></div>
       </div>
+    </div>
+
+    <div class="container">
+      <div class="cb-head">
+        <div class="cb-titles">
+          <span class="cb-title" id="cb-title">Featured</span>
+          <span class="cb-count" id="cb-count"></span>
+        </div>
+        <button class="cb-recycle" id="cb-recycle" type="button">Show 3 more <span aria-hidden="true">&#8594;</span> <span class="pos" id="cb-pos"></span></button>
+      </div>
+      <div class="cb-row" id="cb-row"></div>
+      <div class="cb-seo" id="cb-seo"></div>
     </div>
   </section>
 
@@ -2035,15 +1912,18 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
 // ===== ROUTER =====
 const PAGES = ['home','services','work','about','pricing','contact'];
 function go(page) {
+  let sub = '';
+  if (page && page.indexOf('/') !== -1) { const parts = page.split('/'); page = parts[0]; sub = parts[1] || ''; }
   if (!PAGES.includes(page)) page = 'home';
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const el = document.getElementById('page-' + page);
   if (el) { el.classList.add('active'); el.classList.add('page-enter'); setTimeout(() => el.classList.remove('page-enter'), 400); }
   document.querySelectorAll('.nav-link').forEach(l => l.classList.toggle('active', l.dataset.page === page));
-  window.location.hash = page === 'home' ? '' : page;
+  window.location.hash = page === 'home' ? '' : (page + (sub ? '/' + sub : ''));
   window.scrollTo({ top: 0, behavior: 'instant' });
   setTimeout(setupObservers, 50);
   if (page === 'work' || page === 'services') setTimeout(scalePrevIframes, 80);
+  if (page === 'work') setTimeout(() => cbInit(sub), 60);
   if (page === 'home') { startCanvas(); updateTitle(page); }
   else { stopCanvas(); updateTitle(page); }
 }
@@ -2256,6 +2136,278 @@ function scalePrevIframes() {
   });
 }
 window.addEventListener('resize', scalePrevIframes, { passive: true });
+
+// ===== CONCEPT BUILDS =====
+const BASE = 'https://thryveops-previews.vercel.app/';
+const OVERRIDE = {
+  'little-tina-cafe': 'https://little-tina-cafe.vercel.app',
+  // Deployed 2026-07-28 as its own Vercel project on the ThryveOps team.
+  // Not under thryveops-previews — separate repo (thryve-marketing/blb-website).
+  'big-league-barbershop': 'https://big-league-barbershop.vercel.app',
+};
+
+/* real client work vs unbuilt concept — different badge */
+const CLIENT = new Set(['mentalgame','big-league-barbershop']);
+
+/* Full rosters straight out of thryveops-previews/src/app.
+   First 3 of each are what shows before you hit "Show 3 more". */
+const M = {
+  // ── featured
+  'mentalgame':               ['Mental Game','Music & Wellness','Evan J','Music meets mental health — a brand built around artistic identity.'],
+  'big-league-barbershop':    ['Big League Barbershop','Barbershop','Downtown Tampa, FL','Precision cuts — custom Square booking flow, team profiles and gallery.'],
+  // ── barbershops (12)
+  'la-perla-barbershop':      ['La Perla Barbershop','Barbershop','North Tampa, FL','Neighborhood shop with a loyal, chair-by-chair following.'],
+  'kingly-cutz-barbershop':   ['Kingly Cutz','Barbershop','Tampa, FL','Precision fades and signature beard work.'],
+  'tonikon-barbershop':       ['Tonikon Barbershop','Barbershop','Tampa, FL','Modern cuts with a clean booking flow.'],
+  'the-fade-factory':         ['The Fade Factory','Grooming','Tampa, FL',"Gentlemen's grooming — cuts, shaves, memberships."],
+  'cigar-city-barbershop':    ['Cigar City Barbershop','Barbershop','Tampa, FL',"Speakeasy barbers on N Florida Ave."],
+  'razorz-edge-barbershop':   ['Razorz Edge','Barbershop','Tampa, FL','Straight-razor detail work, walk-ins welcome.'],
+  'elias-barbershop-7k':      ['Elías Barbershop 7k','Barbershop','Sarasota, FL','Bilingual shop built around a loyal regular base.'],
+  'district-barbers-tampa':   ['District Barbers','Barbershop','Hyde Park, FL',"Hyde Park's premier barbershop."],
+  'house-of-barbers':         ['House of Barbers','Barbershop','Columbia, MD',"Centre Park's premier barbershop."],
+  'pro-clips-barber-shop':    ['Pro Clips','Barbershop','Columbia, MD','Twenty years on Snowden River Pkwy.'],
+  'warrens-barber-shop':      ["Warren's Barber Shop",'Barbershop','Columbia, MD',"Columbia's first Black-owned barbershop."],
+  'familiar-faces-barber-shop':['Familiar Faces','Barbershop','Columbia, MD',"Columbia's neighborhood shop."],
+  // ── cafés (13)
+  'little-tina-cafe':         ['Little Tina Café','Café','Downtown Tampa','Specialty coffee, craft cocktails & Tulum-inspired bites.'],
+  'hotwax':                   ['HotWax','Coffee & Taps','Ybor City, FL','Coffee, kava and live music under one roof.'],
+  'fresco-gelato-and-coffee': ['Fresco Gelato','Gelato & Coffee','Sarasota, FL','Handmade gelato and espresso on Main Street.'],
+  'sea-maids-creamery':       ["Sea Maid's Creamery",'Creamery','Seminole Heights, FL','Small-batch ice cream with a seaside identity.'],
+  'k-dessert-cafe':           ['K Dessert Cafe','Dessert Café','Maryland','Late-night desserts and specialty drinks.'],
+  'georgia-grace-cafe':       ['Georgia Grace Cafe','Brunch','Ellicott City, MD','Mediterranean brunch on historic Main Street.'],
+  'cafe-ez':                  ['Cafe EZ','Brunch','Ellicott City, MD','Korean-American brunch across two locations.'],
+  'cafe-columbia':            ['Cafe Columbia','Crêperie','Columbia, MD','Sweet and savory crepes in Town Center.'],
+  'bon-appetit':              ['Bon Appetit Bakery','Bakery & Café','Ellicott City, MD','Korean-American specialty bakery.'],
+  'touche-touchet':           ['Touché Touchet','Bakery & Café','Elkridge, MD','Real New Orleans beignets, owner-operated.'],
+  'elevationcoffee':          ['Elevation Coffee','Coffee & Wine','Ybor City, FL','Specialty coffee and a natural wine bar.'],
+  'retrohouse':               ['Retro House','Coffee & Dim Sum','Ybor City, FL','Hong Kong-style coffee and dim sum.'],
+  'thegoods':                 ['The Goods','Coffee & Gifts','Seminole Heights, FL','Coffee bar and curated gift shop.'],
+  // ── restaurants (14)
+  'abellas-cuban-restaurant': ["Abella's Cuban",'Restaurant','Tampa, FL','Family Cuban kitchen — menu, hours and ordering.'],
+  'bello-bar-kitchen':        ['Bello Bar + Kitchen','Bar & Kitchen','Downtown Tampa','Elevated bar food and a room worth photographing.'],
+  'laterrazza':               ['La Terrazza','Fine Dining','Ybor City, FL','Northern Italian fine dining with reservations.'],
+  'jamesjoyce':               ['James Joyce Irish Pub','Pub','Ybor City, FL',"Ybor's pub since 2002 — events and live music."],
+  'klobys-bbq':               ["Kloby's Smokehouse",'BBQ & Whiskey','Maryland','Slow-smoked BBQ and a world-class whiskey list.'],
+  'trolley-stop':             ['The Trolley Stop','Gastropub','Ellicott City, MD','Historic Oella restaurant and full bar.'],
+  'salrosa':                  ['Sal Rosa','Latin Kitchen','Downtown Tampa','Caribbean-Latin kitchen and bar.'],
+  'coasis':                   ['Coasis','Restaurant & Bar','Tampa Heights, FL','Soul, steak and R&B.'],
+  'frontporch':               ['Front Porch & Bart’s','Restaurant','Seminole Heights, FL','Seminole Heights staple since 2002.'],
+  'momo-hub':                 ['MoMo Hub','Nepali','Clarksville, MD','Authentic Nepali dumplings, halal and vegan options.'],
+  'jumak':                    ['JUMAK Café & Bistro','Fusion','Ellicott City, MD','Korean × Japanese fusion and late-night bar.'],
+  'ananda':                   ['Ananda','Indian','Maple Lawn, MD','Elevated Indian cuisine, farm-to-table.'],
+  'mangomix':                 ['Mango Mix','Fruteria','Tampa, FL','Colombian fruteria across two locations.'],
+  'rollinmullet':             ["The Rollin' Mullet",'Food Truck','Seminole Heights, FL','1971 Airstream, lobster rolls and lawn games.'],
+  // ── auto detailing (8)
+  'roman-mobile-car-care':    ['Roman Mobile Car Care','Mobile Detailing','Clearwater, FL','Service tiers, coverage zones and instant quotes.'],
+  'tropik-detailing-tampa':   ['Tropik Detailing','Auto & Marine','Tampa, FL','Ceramic coating and paint correction, priced up front.'],
+  'crown-clean-auto-detailing':['Crown Clean','Detailing','Tampa Bay, FL',"Tampa Bay's elite mobile detailing."],
+  'new-level-auto-detailing': ['New Level Detailing','Detailing','Largo, FL','Pinellas County mobile detailing with service tiers.'],
+  'jb-mobile-detailing':      ['JB Mobile Detailing','Mobile Detailing','Tampa, FL','Mobile detailing built around repeat clients.'],
+  'sparklean-mobile-detailing':['Sparklean','Mobile Detailing','Ellicott City, MD','Perfect 5.0 rating across 137 reviews.'],
+  'auto-obsessions-car-care': ['Auto Obsessions','Car Care','Columbia, MD','Full-service care with a detail-obsessed brand.'],
+  'ceramic-pro-atomic-auto-salon':['Atomic Auto Salon','Ceramic Coating','Columbia, MD','Ceramic Pro Elite Dealer.'],
+  // ── nails & beauty (9)
+  'sunny-nail-lounge':        ['Sunny Nail Lounge','Nail Salon','Lakeland, FL','Full service menu, gallery and online booking.'],
+  'paradise-nails':           ['Paradise Nails','Nail Salon','Lakeland, FL','Walk-in salon with scannable pricing.'],
+  'emii-beauty':              ['Emii Beauty','Lash & Brow','Tampa, FL','Certified lash and brow artist, portfolio-first.'],
+  'v-nail-and-beauty':        ['V Nail and Beauty','Nail Studio','Westshore, FL','Boutique nail studio with a clean service grid.'],
+  't-and-d-nail-salon':       ['T&D Nail Salon','Nail Salon','South Tampa, FL','Nails done right in South Tampa.'],
+  'lv-nails-spa':             ['LV Nails Spa','Nail Salon','Tampa, FL','Neighborhood salon on W Hillsborough Ave.'],
+  'real-nail-spa':            ['Real Nail Spa','Nail Spa','Columbia, MD','4.9 stars across 134 reviews.'],
+  'vickies-nails':            ["Vickie's Nails",'Nail Salon','Columbia, MD','Neighborhood nail salon on MD-108.'],
+  'levisa-massage-spa':       ['Levisa Massage Spa','Massage & Spa','Maryland','Therapeutic massage with online booking.'],
+  // ── marine (6)
+  'peters-boat-repairs':      ["Peter's Inboard & Outboard",'Marine Repair','Tampa Bay, FL','Marine mechanic — services, brands, fast contact.'],
+  'nautical-marine':          ['Nautical Marine','Repower & Service','Tampa Bay, FL',"Tampa Bay's #1 outboard repower centre."],
+  'h2o-marine':               ['H2O Marine','Boat Repair','Sarasota, FL','Boat repair since 2002, built on trust signals.'],
+  'tampa-fishing-charters':   ['Tampa Fishing Charters','Charters','Tampa Bay, FL','Inshore charters with trip types and booking.'],
+  'shallow-point-charters':   ['Shallow Point Charters','Charters','Tampa Bay, FL','Inshore fishing since 1998.'],
+  'slay-the-bay-charters':    ['Slay The Bay','Charters','Tampa Bay, FL','Inshore fishing charters, trips and rates.'],
+  // ── tattoo (6)
+  'dc-society-ink':           ['DC Society Ink','Tattoo Studio','South Tampa, FL','Artist roster, galleries and consult requests.'],
+  'sun-coast-tattoos':        ['Sun Coast Tattoos','Tattoo','St Pete Beach, FL','Walk-ins welcome — flash, custom work, aftercare.'],
+  'ironblood-tattoos':        ['Iron Blood Tattoos','Tattoo & Piercing','North Tampa, FL','Custom tattoos and piercings, gallery-led.'],
+  'angry-raven-tattoo':       ['Angry Raven Tattoo','Tattoo','Tampa, FL','Custom work, walk-ins until 10 PM.'],
+  'tampa-tattoo-co':          ['Tampa Tattoo Co.','Tattoo','Tampa, FL','Custom tattoos, walk-ins welcome.'],
+  'las-vegas-tattoo-co':      ["Doc Dog's Las Vegas Tattoo",'Tattoo & Piercing','Ybor City, FL','Ybor institution with a deep portfolio.'],
+  // ── home & trades (6)
+  'mastercut-lawn-service':   ['Mastercut Lawn','Lawn Care','Maryland','Recurring plans with instant quote request.'],
+  'aguila-electrical':        ['Aguila Electrical','Electrician','Tampa, FL','Licensed electricians since 2004.'],
+  'stay-dry-roofing':         ['Stay Dry Roofing','Roofing','Florida','Storm response, financing and warranty blocks.'],
+  'plumbgreat-plumbing':      ['PlumbGreat Plumbing','Plumbing','Maryland','Emergency plumbing, call-first design.'],
+  'albert-ellis-landscaping': ['Albert Ellis Landscaping','Landscaping','Maryland','Design, build and maintenance portfolio.'],
+  'precision-vision-lawns':   ['Precision Vision Lawns','Lawn Care','Ellicott City, MD','Neighborhood lawn care with seasonal plans.'],
+};
+
+const GROUPS = [
+  { id:'featured',  title:'Featured',           slugs:['little-tina-cafe','mentalgame','big-league-barbershop'], noCycle:true, note:'Unique builds — no two alike' },
+  { id:'barbershops',    title:'Barbershops',        slugs:['la-perla-barbershop','kingly-cutz-barbershop','tonikon-barbershop','the-fade-factory','cigar-city-barbershop','razorz-edge-barbershop','elias-barbershop-7k','district-barbers-tampa','house-of-barbers','pro-clips-barber-shop','warrens-barber-shop','familiar-faces-barber-shop'] },
+  { id:'cafes',          title:'Cafés & Coffee',     slugs:['little-tina-cafe','hotwax','fresco-gelato-and-coffee','sea-maids-creamery','k-dessert-cafe','georgia-grace-cafe','cafe-ez','cafe-columbia','bon-appetit','touche-touchet','elevationcoffee','retrohouse','thegoods'] },
+  { id:'restaurants',    title:'Restaurants & Bars', slugs:['abellas-cuban-restaurant','bello-bar-kitchen','laterrazza','jamesjoyce','klobys-bbq','trolley-stop','salrosa','coasis','frontporch','momo-hub','jumak','ananda','mangomix','rollinmullet'] },
+  { id:'auto-detailing', title:'Auto Detailing',     slugs:['roman-mobile-car-care','tropik-detailing-tampa','crown-clean-auto-detailing','new-level-auto-detailing','jb-mobile-detailing','sparklean-mobile-detailing','auto-obsessions-car-care','ceramic-pro-atomic-auto-salon'] },
+  { id:'nails-beauty',   title:'Nails & Beauty',     slugs:['sunny-nail-lounge','paradise-nails','emii-beauty','v-nail-and-beauty','t-and-d-nail-salon','lv-nails-spa','real-nail-spa','vickies-nails','levisa-massage-spa'] },
+  { id:'marine',         title:'Marine & Charters',  slugs:['peters-boat-repairs','nautical-marine','h2o-marine','tampa-fishing-charters','shallow-point-charters','slay-the-bay-charters'] },
+  { id:'tattoo',         title:'Tattoo Studios',     slugs:['dc-society-ink','sun-coast-tattoos','ironblood-tattoos','angry-raven-tattoo','tampa-tattoo-co','las-vegas-tattoo-co'] },
+  { id:'home-trades',    title:'Home & Trades',      slugs:['mastercut-lawn-service','aguila-electrical','stay-dry-roofing','plumbgreat-plumbing','albert-ellis-landscaping','precision-vision-lawns'] },
+];
+
+const CB_PER_PAGE = 3;
+const cbUrlFor = s => (s in OVERRIDE) ? OVERRIDE[s] : (BASE + s);
+
+/* Iframe cache. Only the active tab's 3 frames are attached; the previous
+   tab's stay warm so flipping back is instant. Never evicts what's on
+   screen, and the loop is bounded. */
+const CB_MAX_CACHE = 6;
+const cbCache = new Map();
+const cbOrder = [];
+let cbActiveUrls = new Set();
+let cbActive = null, cbPage = 0, cbReady = false;
+
+function cbTouch(url) {
+  const i = cbOrder.indexOf(url);
+  if (i !== -1) cbOrder.splice(i, 1);
+  cbOrder.push(url);
+}
+function cbTrim() {
+  let guard = 50;
+  while (cbOrder.length > CB_MAX_CACHE && guard-- > 0) {
+    const idx = cbOrder.findIndex(u => !cbActiveUrls.has(u));
+    if (idx === -1) break;
+    const [url] = cbOrder.splice(idx, 1);
+    const f = cbCache.get(url);
+    if (f) { if (f.parentNode) f.parentNode.removeChild(f); f.src = 'about:blank'; }
+    cbCache.delete(url);
+  }
+}
+function cbScale(f) {
+  const wrap = f.parentNode;
+  if (!wrap || !wrap.classList) return;
+  f.style.transform = 'scale(' + (wrap.offsetWidth / 1280) + ')';
+  wrap.classList.add('live');
+  if (wrap.parentNode) wrap.parentNode.classList.add('loaded');
+}
+function cbFrame(url) {
+  let f = cbCache.get(url);
+  if (f) { cbTouch(url); return f; }
+  f = document.createElement('iframe');
+  f.src = url;
+  f.loading = 'lazy'; f.scrolling = 'no'; f.tabIndex = -1;
+  f.setAttribute('aria-hidden', 'true');
+  f.className = 'cb-frame';
+  f.addEventListener('load', () => { f.dataset.ready = '1'; cbScale(f); });
+  cbCache.set(url, f); cbTouch(url); cbTrim();
+  return f;
+}
+
+function cbCardHTML(slug) {
+  const m = M[slug];
+  if (!m) return '';
+  const [name, tag, loc, desc] = m;
+  const url = cbUrlFor(slug);
+  if (!url) return '';
+  const badge = CLIENT.has(slug) ? 'Client Build' : 'Concept';
+  return '<a class="prev-card" href="' + url + '" target="_blank" rel="noopener" aria-label="View the ' + name + ' build">'
+    + '<div class="prev-browser"><div class="prev-dots"><span></span><span></span><span></span></div>'
+    + '<div class="prev-url">' + url.replace(/^https:\/\//, '') + '</div></div>'
+    + '<div class="prev-thumb"><div class="prev-thumb-label">' + name + '</div>'
+    + '<span class="cb-badge">' + badge + '</span>'
+    + '<div class="cb-frame-wrap" data-url="' + url + '"></div><span class="cb-shim"></span></div>'
+    + '<div class="prev-info"><div class="prev-tags"><span class="prev-tag">' + tag + '</span>'
+    + '<span class="prev-tag" style="color:var(--border-h)">&#183;</span><span class="prev-tag">' + loc + '</span></div>'
+    + '<div class="prev-title">' + name + '</div><div class="prev-desc">' + desc + '</div></div>'
+    + '<div class="prev-cta">View Preview <span>&#8594;</span></div></a>';
+}
+
+function cbPaint() {
+  const row = document.getElementById('cb-row');
+  if (!row || !cbActive) return;
+  const slugs = cbActive.slugs.slice(cbPage * CB_PER_PAGE, cbPage * CB_PER_PAGE + CB_PER_PAGE)
+                             .filter(s => cbUrlFor(s));
+  cbActiveUrls = new Set(slugs.map(cbUrlFor));
+
+  row.innerHTML = slugs.map(cbCardHTML).join('');
+  row.querySelectorAll('.cb-frame-wrap').forEach(w => {
+    const f = cbFrame(w.dataset.url);
+    w.appendChild(f);
+    if (f.dataset.ready) requestAnimationFrame(() => cbScale(f));
+  });
+  cbTrim();
+
+  document.getElementById('cb-title').textContent = cbActive.title;
+  const total = cbActive.slugs.filter(s => cbUrlFor(s)).length;
+  document.getElementById('cb-count').textContent = cbActive.note || (total + ' builds in this trade');
+
+  const rec = document.getElementById('cb-recycle');
+  const pages = Math.ceil(total / CB_PER_PAGE);
+  rec.style.display = (cbActive.noCycle || pages < 2) ? 'none' : 'flex';
+  document.getElementById('cb-pos').textContent =
+    (cbPage * CB_PER_PAGE + 1) + '–' + Math.min(total, cbPage * CB_PER_PAGE + CB_PER_PAGE) + ' of ' + total;
+}
+
+function cbSelect(g, p, updateHash) {
+  cbActive = g; cbPage = p;
+  document.querySelectorAll('.cb-tab').forEach(t => {
+    const on = t.dataset.id === g.id;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  const row = document.getElementById('cb-row');
+  row.classList.add('swapping');
+  setTimeout(() => { cbPaint(); row.classList.remove('swapping'); }, 180);
+  // replaceState, not location.hash — go() must not re-fire on a tab click
+  if (updateHash) history.replaceState(null, '', '#work' + (g.id === 'featured' ? '' : '/' + g.id));
+}
+
+/* Built lazily: nothing loads until the Work page is actually opened. */
+function cbInit(sub) {
+  if (cbReady) {
+    const g = GROUPS.find(x => x.id === sub);
+    if (g && g !== cbActive) cbSelect(g, 0, false);
+    return;
+  }
+  const tabs = document.getElementById('cb-tabs');
+  if (!tabs) return;
+  cbReady = true;
+
+  GROUPS.forEach(g => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'cb-tab' + (g.id === 'featured' ? ' feat' : '');
+    b.setAttribute('role', 'tab');
+    b.dataset.id = g.id;
+    const n = g.slugs.filter(s => cbUrlFor(s)).length;
+    b.innerHTML = g.title + (g.noCycle ? '' : ' <span class="n">' + n + '</span>');
+    b.addEventListener('click', () => cbSelect(g, 0, true));
+    tabs.appendChild(b);
+  });
+
+  document.getElementById('cb-recycle').addEventListener('click', () => {
+    const total = cbActive.slugs.filter(s => cbUrlFor(s)).length;
+    cbSelect(cbActive, (cbPage + 1) % Math.ceil(total / CB_PER_PAGE), false);
+  });
+
+  // every build stays crawlable regardless of which tab is open
+  document.getElementById('cb-seo').innerHTML = GROUPS.slice(1).map(g =>
+    '<h3>' + g.title + '</h3>' + g.slugs.map(s => {
+      const u = cbUrlFor(s);
+      return (M[s] && u) ? '<a href="' + u + '">' + M[s][0] + ' — ' + M[s][1] + ', ' + M[s][2] + '</a>' : '';
+    }).join('')).join('');
+
+  const start = GROUPS.find(g => g.id === sub) || GROUPS[0];
+  cbActive = start; cbPage = 0;
+  document.querySelectorAll('.cb-tab').forEach(t => {
+    const on = t.dataset.id === start.id;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  cbPaint();
+}
+
+let cbRt;
+window.addEventListener('resize', () => {
+  clearTimeout(cbRt);
+  cbRt = setTimeout(() => document.querySelectorAll('.cb-frame').forEach(cbScale), 150);
+}, { passive: true });
 
 // ===== INIT =====
 setupObservers();
