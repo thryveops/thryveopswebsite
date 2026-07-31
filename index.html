@@ -825,6 +825,28 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
 .prev-thumb.loaded .cb-shim{opacity:0}
 @keyframes cbShim{0%{background-position:140% 0}100%{background-position:-40% 0}}
 .cb-seo{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── HOMEPAGE: pick-a-trade preview ────────────────────────────────
+   Exactly ONE live iframe, ever — chips swap its src rather than
+   adding frames. Mounts only when the section scrolls into view. */
+.hw-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:52px;align-items:center}
+.hw-copy{min-width:0}
+.hw-lead{font-size:16px;color:var(--silver-d);line-height:1.7;margin:14px 0 24px;max-width:420px}
+.hw-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.hw-chip{padding:8px 15px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--silver-d);font-size:13px;font-weight:500;cursor:pointer;transition:var(--t);white-space:nowrap;font-family:inherit;display:flex;align-items:center;gap:7px}
+.hw-chip:hover{border-color:var(--border-h);color:var(--white)}
+.hw-chip.active{background:var(--silver);color:var(--bg);border-color:var(--silver);font-weight:600}
+.hw-chip .n{font-size:11px;opacity:.55;font-variant-numeric:tabular-nums}
+.hw-stage{min-width:0}
+.hw-meta{margin-top:14px;min-height:52px}
+.hw-name{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;color:var(--white);letter-spacing:-.02em;margin-bottom:4px}
+.hw-tags{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--silver-d)}
+@media(max-width:900px){
+  .hw-grid{grid-template-columns:1fr;gap:30px}
+  .hw-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:22px}
+  .hw-chips::-webkit-scrollbar{display:none}
+  .hw-lead{max-width:100%}
+}
 @media(max-width:1000px){
   .cb-row{grid-template-columns:repeat(2,1fr)}
   .cb-row .prev-card:nth-child(3){display:none}
@@ -1032,6 +1054,39 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
           <div class="svc-title">Social Media Management &amp; Content Creation</div>
           <p class="svc-desc">Strategic content that builds loyal audiences, drives engagement, and converts followers into customers across every platform.</p>
           <button class="svc-link" onclick="go('services')" aria-label="Learn more about social media management">Learn More &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SELECTED WORK: pick a trade, see one live build ───────────── -->
+  <section class="section" id="hw-section" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)" aria-labelledby="hw-title">
+    <div class="container">
+      <div class="hw-grid">
+        <div class="hw-copy fade-up">
+          <span class="label">Selected Work</span>
+          <h2 class="sh-title" id="hw-title" style="text-align:left;font-size:clamp(26px,3.2vw,38px);margin:12px 0 0">Built for Your Industry</h2>
+          <p class="hw-lead">We've built <strong style="color:var(--silver-l);font-weight:600">80+ websites</strong> for local businesses. Pick your trade and see one of them running live.</p>
+          <div class="hw-chips" id="hw-chips" role="tablist" aria-label="Choose an industry"></div>
+          <button class="btn btn-primary" id="hw-cta" type="button">See All Our Work &#8594;</button>
+        </div>
+        <div class="hw-stage fade-up fd2">
+          <a class="prev-card" id="hw-card" href="#" target="_blank" rel="noopener">
+            <div class="prev-browser">
+              <div class="prev-dots"><span></span><span></span><span></span></div>
+              <div class="prev-url" id="hw-url"></div>
+            </div>
+            <div class="prev-thumb" id="hw-thumb">
+              <div class="prev-thumb-label" id="hw-label"></div>
+              <span class="cb-badge" id="hw-badge">Concept</span>
+              <div class="cb-frame-wrap" id="hw-frame-wrap"></div>
+              <span class="cb-shim"></span>
+            </div>
+          </a>
+          <div class="hw-meta">
+            <div class="hw-name" id="hw-name"></div>
+            <div class="hw-tags" id="hw-tagline"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -2409,8 +2464,142 @@ window.addEventListener('resize', () => {
   cbRt = setTimeout(() => document.querySelectorAll('.cb-frame').forEach(cbScale), 150);
 }, { passive: true });
 
+
+// ===== HOMEPAGE: PICK-A-TRADE PREVIEW =====
+/* One flagship per trade. Reuses M / GROUPS / cbUrlFor from the concept
+   builds block above. Exactly one iframe exists at any time — chips swap
+   its src rather than adding frames — and it is not created at all until
+   the section scrolls into view. */
+const HW_PICKS = [
+  { id:'featured',       slug:'mentalgame',                noun:null },
+  { id:'barbershops',    slug:'big-league-barbershop',     noun:'barbershop' },
+  { id:'cafes',          slug:'little-tina-cafe',          noun:'café' },
+  { id:'restaurants',    slug:'bello-bar-kitchen',          noun:'restaurant' },
+  { id:'auto-detailing', slug:'tropik-detailing-tampa',     noun:'detailing' },
+  { id:'nails-beauty',   slug:'sunny-nail-lounge',         noun:'beauty' },
+  { id:'marine',         slug:'h2o-marine',                 noun:'marine' },
+  { id:'tattoo',         slug:'dc-society-ink',            noun:'tattoo' },
+  { id:'home-trades',    slug:'mastercut-lawn-service',    noun:'trades' },
+];
+
+let hwActive = HW_PICKS[0], hwFrame = null, hwMounted = false;
+
+function hwGroup(id) { return GROUPS.find(g => g.id === id); }
+
+function hwScale() {
+  const wrap = document.getElementById('hw-frame-wrap');
+  if (!hwFrame || !wrap) return;
+  hwFrame.style.transform = 'scale(' + (wrap.offsetWidth / 1280) + ')';
+}
+
+function hwLoad(url) {
+  const wrap = document.getElementById('hw-frame-wrap');
+  const thumb = document.getElementById('hw-thumb');
+  if (!wrap) return;
+  wrap.classList.remove('live');
+  if (thumb) thumb.classList.remove('loaded');
+  if (!hwFrame) {
+    hwFrame = document.createElement('iframe');
+    hwFrame.loading = 'lazy'; hwFrame.scrolling = 'no'; hwFrame.tabIndex = -1;
+    hwFrame.setAttribute('aria-hidden', 'true');
+    hwFrame.className = 'cb-frame';
+    hwFrame.style.height = '720px';
+    hwFrame.addEventListener('load', () => {
+      hwScale();
+      wrap.classList.add('live');
+      if (thumb) thumb.classList.add('loaded');
+    });
+    wrap.appendChild(hwFrame);
+  }
+  hwFrame.src = url;
+  hwScale();
+}
+
+function hwSelect(pick, mountNow) {
+  hwActive = pick;
+  const m = M[pick.slug];
+  const url = cbUrlFor(pick.slug);
+  if (!m || !url) return;
+  const [name, tag, loc] = m;
+
+  document.querySelectorAll('.hw-chip').forEach(c => {
+    const on = c.dataset.id === pick.id;
+    c.classList.toggle('active', on);
+    c.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+
+  document.getElementById('hw-url').textContent   = url.replace(/^https:\/\//, '');
+  document.getElementById('hw-label').textContent = name;
+  document.getElementById('hw-name').textContent  = name;
+  document.getElementById('hw-tagline').textContent = tag + ' · ' + loc;
+  document.getElementById('hw-badge').textContent = CLIENT.has(pick.slug) ? 'Client Build' : 'Concept';
+  const card = document.getElementById('hw-card');
+  card.href = url;
+  card.setAttribute('aria-label', 'View the ' + name + ' build');
+
+  // CTA follows the selection, and routes into the matching Work tab
+  const g = hwGroup(pick.id);
+  const cta = document.getElementById('hw-cta');
+  if (pick.noun && g) {
+    const n = g.slugs.filter(s => cbUrlFor(s)).length;
+    cta.innerHTML = 'See all ' + n + ' ' + pick.noun + ' builds &#8594;';
+    cta.dataset.target = 'work/' + pick.id;
+  } else {
+    cta.innerHTML = 'See All Our Work &#8594;';
+    cta.dataset.target = 'work';
+  }
+
+  if (hwMounted || mountNow) { hwMounted = true; hwLoad(url); }
+}
+
+function hwInit() {
+  const chips = document.getElementById('hw-chips');
+  if (!chips || chips.children.length) return;
+
+  HW_PICKS.forEach(p => {
+    const g = hwGroup(p.id);
+    if (!g || !M[p.slug] || !cbUrlFor(p.slug)) return;
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'hw-chip';
+    b.setAttribute('role', 'tab');
+    b.dataset.id = p.id;
+    const n = p.noun ? ' <span class="n">' + g.slugs.filter(s => cbUrlFor(s)).length + '</span>' : '';
+    b.innerHTML = g.title + n;
+    b.addEventListener('click', () => hwSelect(p, true));
+    chips.appendChild(b);
+  });
+
+  document.getElementById('hw-cta').addEventListener('click', function() {
+    go(this.dataset.target || 'work');
+  });
+
+  hwSelect(HW_PICKS[0], false);   // paint the card, but don't load yet
+
+  // the iframe is created only once the section is actually reached
+  const sect = document.getElementById('hw-section');
+  if (sect && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        obs.disconnect();
+        hwMounted = true;
+        hwLoad(cbUrlFor(hwActive.slug));
+      });
+    }, { rootMargin: '200px' });
+    io.observe(sect);
+  } else {
+    hwMounted = true;
+    hwLoad(cbUrlFor(hwActive.slug));
+  }
+}
+
+let hwRt;
+window.addEventListener('resize', () => { clearTimeout(hwRt); hwRt = setTimeout(hwScale, 150); }, { passive: true });
+
 // ===== INIT =====
 setupObservers();
+hwInit();
 </script>
 </body>
 </html>
