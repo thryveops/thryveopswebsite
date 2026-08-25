@@ -2213,7 +2213,11 @@ const OVERRIDE = {
   'big-league-barbershop': 'https://big-league-barbershop.vercel.app',
   // Deployed 2026-08-25 on its own Vercel project. Live domain frames fine;
   // fallback if framing headers ever appear: https://pourme-up.vercel.app
-  'dmvaidan': 'https://pourmeup.co',
+  // ?preview=1 — the site opens on a full-screen entry gate that has to be
+  // clicked, and these frames are pointer-events:none, so it would sit on the
+  // gate forever. The param plays the gate in full and then opens it. Visitors
+  // clicking the card still get the real gate; only the frame is auto-advanced.
+  'dmvaidan': 'https://pourmeup.co/?preview=1',
 };
 
 /* real client work vs unbuilt concept — different badge */
