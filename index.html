@@ -1476,8 +1476,20 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
         <button class="filt" data-filter="web" role="tab" aria-selected="false">Web</button>
       </div>
       <div class="port-grid" id="port-grid">
+        <!-- DMVAIDAN - Web -->
+        <a class="port-card fade-up" data-cat="web" href="https://pourmeup.co/" target="_blank" rel="noopener" aria-label="Visit the DMVAIDAN &#8212; Pour Me Up website">
+          <div class="port-thumb" style="background:#000;">
+            <img src="images/dmvaidan_logo.jpg" alt="DMVAIDAN &#8212; Pour Me Up" style="width:100%;height:100%;object-fit:cover;">
+            <div class="port-overlay"><span class="port-overlay-txt">Visit Live Site &#8594;</span></div>
+          </div>
+          <div class="port-info">
+            <div class="port-tags"><span class="port-tag">Music</span><span style="color:var(--border-h)">&#183;</span><span class="port-tag">Web</span></div>
+            <div class="port-title">DMVAIDAN &#8212; Pour Me Up</div>
+            <div class="port-metric">&#8593; Artist brand &amp; web presence built from the ground up</div>
+          </div>
+        </a>
         <!-- Ahmad A. - Web -->
-        <a class="port-card fade-up" data-cat="web" href="https://410oddjobs.com/" target="_blank" rel="noopener" aria-label="Visit the 410 Odd Jobs Co. website">
+        <a class="port-card fade-up fd2" data-cat="web" href="https://410oddjobs.com/" target="_blank" rel="noopener" aria-label="Visit the 410 Odd Jobs Co. website">
           <div class="port-thumb">
             <img src="images/odd_jobs_logo.png" alt="410 Odd Jobs Co." style="width:100%;height:100%;object-fit:contain;background:white;">
             <div class="port-overlay"><span class="port-overlay-txt">Visit Live Site &#8594;</span></div>
@@ -1489,7 +1501,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
           </div>
         </a>
         <!-- Mental Game - Web -->
-        <a class="port-card fade-up fd2" data-cat="web" href="https://www.mentalgame.company/" target="_blank" rel="noopener" aria-label="Visit the Mental Game website">
+        <a class="port-card fade-up fd3" data-cat="web" href="https://www.mentalgame.company/" target="_blank" rel="noopener" aria-label="Visit the Mental Game website">
           <div class="port-thumb" style="background:#000;">
             <img src="images/mental_game_logo.png" alt="Mental Game" style="width:100%;height:100%;object-fit:cover;">
             <div class="port-overlay"><span class="port-overlay-txt">Visit Live Site &#8594;</span></div>
@@ -1501,7 +1513,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
           </div>
         </a>
         <!-- NYX - Web & Brand -->
-        <a class="port-card fade-up fd3" data-cat="web" href="https://nyxnights.club/" target="_blank" rel="noopener" aria-label="Visit the NYX website">
+        <a class="port-card fade-up" data-cat="web" href="https://nyxnights.club/" target="_blank" rel="noopener" aria-label="Visit the NYX website">
           <div class="port-thumb" style="background:#000;">
             <img src="images/nyx_logo.png" alt="NYX — Escape Into The Nyx" style="width:100%;height:100%;object-fit:contain;padding:18px;">
             <div class="port-overlay"><span class="port-overlay-txt">Visit Live Site &#8594;</span></div>
@@ -1513,7 +1525,7 @@ h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacin
           </div>
         </a>
         <!-- NightX - Mobile App (in-house) -->
-        <a class="port-card fade-up" data-cat="web" href="https://usenightx.com/" target="_blank" rel="noopener" aria-label="Visit the NightX website">
+        <a class="port-card fade-up fd2" data-cat="web" href="https://usenightx.com/" target="_blank" rel="noopener" aria-label="Visit the NightX website">
           <div class="port-thumb">
             <img src="images/nightx_logo.svg" alt="NightX" style="width:100%;height:100%;object-fit:cover;">
             <div class="port-overlay"><span class="port-overlay-txt">Visit Live Site &#8594;</span></div>
@@ -2199,15 +2211,19 @@ const OVERRIDE = {
   // Deployed 2026-07-28 as its own Vercel project on the ThryveOps team.
   // Not under thryveops-previews — separate repo (thryve-marketing/blb-website).
   'big-league-barbershop': 'https://big-league-barbershop.vercel.app',
+  // Deployed 2026-08-25 on its own Vercel project. Live domain frames fine;
+  // fallback if framing headers ever appear: https://pourme-up.vercel.app
+  'dmvaidan': 'https://pourmeup.co',
 };
 
 /* real client work vs unbuilt concept — different badge */
-const CLIENT = new Set(['mentalgame','big-league-barbershop']);
+const CLIENT = new Set(['dmvaidan','mentalgame','big-league-barbershop']);
 
 /* Full rosters straight out of thryveops-previews/src/app.
    First 3 of each are what shows before you hit "Show 3 more". */
 const M = {
   // ── featured
+  'dmvaidan':                 ['DMVAIDAN — Pour Me Up','Musician','Worldwide','Dark melodic traprock — an artist site built around the record.'],
   'mentalgame':               ['Mental Game','Music & Wellness','Evan J','Music meets mental health — a brand built around artistic identity.'],
   'big-league-barbershop':    ['Big League Barbershop','Barbershop','Downtown Tampa, FL','Precision cuts — custom Square booking flow, team profiles and gallery.'],
   // ── barbershops (12)
@@ -2295,7 +2311,7 @@ const M = {
 };
 
 const GROUPS = [
-  { id:'featured',  title:'Featured',           slugs:['little-tina-cafe','mentalgame','big-league-barbershop'], noCycle:true, note:'Unique builds — no two alike' },
+  { id:'featured',  title:'Featured',           slugs:['dmvaidan','mentalgame','big-league-barbershop'], noCycle:true, note:'Unique builds — no two alike' },
   { id:'barbershops',    title:'Barbershops',        slugs:['la-perla-barbershop','kingly-cutz-barbershop','tonikon-barbershop','the-fade-factory','cigar-city-barbershop','razorz-edge-barbershop','elias-barbershop-7k','district-barbers-tampa','house-of-barbers','pro-clips-barber-shop','warrens-barber-shop','familiar-faces-barber-shop'] },
   { id:'cafes',          title:'Cafés & Coffee',     slugs:['little-tina-cafe','hotwax','fresco-gelato-and-coffee','sea-maids-creamery','k-dessert-cafe','georgia-grace-cafe','cafe-ez','cafe-columbia','bon-appetit','touche-touchet','elevationcoffee','retrohouse','thegoods'] },
   { id:'restaurants',    title:'Restaurants & Bars', slugs:['abellas-cuban-restaurant','bello-bar-kitchen','laterrazza','jamesjoyce','klobys-bbq','trolley-stop','salrosa','coasis','frontporch','momo-hub','jumak','ananda','mangomix','rollinmullet'] },
@@ -2471,7 +2487,7 @@ window.addEventListener('resize', () => {
    its src rather than adding frames — and it is not created at all until
    the section scrolls into view. */
 const HW_PICKS = [
-  { id:'featured',       slug:'mentalgame',                noun:null },
+  { id:'featured',       slug:'dmvaidan',                  noun:null },
   { id:'barbershops',    slug:'big-league-barbershop',     noun:'barbershop' },
   { id:'cafes',          slug:'little-tina-cafe',          noun:'café' },
   { id:'restaurants',    slug:'bello-bar-kitchen',          noun:'restaurant' },
